@@ -16,6 +16,6 @@
     "wdio-cucumberjs-json-reporter": "^5.1.7"
   },
   "scripts": {
-    "wdio": "wdio run ./wdio.conf.js"
+    "wdio": "wdio run test/configs/wdio.conf.js"
   }
 }
