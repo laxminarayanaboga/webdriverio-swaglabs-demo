@@ -3,6 +3,8 @@ import {generate} from "multiple-cucumber-html-reporter";
 import pkg from 'fs-extra';
 const {removeSync} = pkg;
 
+import cucumberJson from 'wdio-cucumberjs-json-reporter';
+
 export const config = {
     //
     // ====================
@@ -273,8 +275,9 @@ export const config = {
      * @param {number}                 result.duration  duration of scenario in milliseconds
      * @param {object}                 context          Cucumber World object
      */
-    // afterScenario: function (world, result, context) {
-    // },
+    afterScenario: async function (world, result, context) {
+        cucumberJson.attach(await browser.takeScreenshot(), 'image/png');
+    },
     /**
      *
      * Runs after a Cucumber Feature.
