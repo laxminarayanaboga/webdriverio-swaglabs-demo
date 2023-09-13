@@ -61,3 +61,7 @@ typings/
 allure-results/
 
 .idea/
+
+reports/
+
+.tmp/

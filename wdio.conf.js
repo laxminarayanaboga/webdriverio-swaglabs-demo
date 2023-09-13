@@ -1,3 +1,8 @@
+import {generate} from "multiple-cucumber-html-reporter";
+// import {removeSync} from "fs-extra/lib/remove/index.js";
+// const {removeSync} = require('fs-extra');
+
+
 export const config = {
     //
     // ====================
@@ -123,7 +128,12 @@ export const config = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter
-    reporters: ['spec','cucumberjs-json'],
+    reporters: [
+        'spec',
+        ['cucumberjs-json',
+            {jsonFolder: './reports/cucumber-json',}
+        ]
+    ],
 
     //
     // If you are using Cucumber you need to specify the location of your step definitions.
@@ -151,7 +161,7 @@ export const config = {
         // <boolean> Enable this config to treat undefined definitions as warnings.
         ignoreUndefinedDefinitions: false
     },
-    
+
     //
     // =====
     // Hooks
@@ -165,8 +175,9 @@ export const config = {
      * @param {object} config wdio configuration object
      * @param {Array.<Object>} capabilities list of capabilities details
      */
-    // onPrepare: function (config, capabilities) {
-    // },
+    onPrepare: function (config, capabilities) {
+        // removeSync('./reports/')
+    },
     /**
      * Gets executed before a worker process is spawned and can be used to initialise specific service
      * for that worker as well as modify runtime environments in an async fashion.
@@ -272,7 +283,7 @@ export const config = {
      */
     // afterFeature: function (uri, feature) {
     // },
-    
+
     /**
      * Runs after a WebdriverIO command gets executed
      * @param {string} commandName hook command name
@@ -307,13 +318,43 @@ export const config = {
      * @param {Array.<Object>} capabilities list of capabilities details
      * @param {<Object>} results object containing test results
      */
-    // onComplete: function(exitCode, config, capabilities, results) {
-    // },
+    onComplete: function (exitCode, config, capabilities, results) {
+        generate({
+            jsonDir: "./reports/cucumber-json",
+            reportPath: "./reports/cucumber-html/",
+            openReportInBrowser: true,
+            disableLog: true,
+            pageTitle: "demo",
+            reportName: "Demo",
+            displayDuration: true,
+            metadata: {
+                browser: {
+                    name: "chrome",
+                    version: "60",
+                },
+                device: "Local test machine",
+                platform: {
+                    name: "ubuntu",
+                    version: "16.04",
+                },
+            },
+            customData: {
+                title: "Run info",
+                data: [
+                    {label: "Project", value: "Demo project"},
+                    {label: "Release", value: "1.2.3"},
+                    {label: "Cycle", value: "B11221.34321"},
+                    {label: "Execution Start Time", value: "Nov 19th 2017, 02:31 PM EST"},
+                    {label: "Execution End Time", value: "Nov 19th 2017, 02:56 PM EST"},
+                ],
+            }
+        });
+    },
     /**
-    * Gets executed when a refresh happens.
-    * @param {string} oldSessionId session ID of the old session
-    * @param {string} newSessionId session ID of the new session
-    */
+     * Gets executed when a refresh happens.
+     * @param {string} oldSessionId session ID of the old session
+     * @param {string} newSessionId session ID of the new session
+     */
     // onReload: function(oldSessionId, newSessionId) {
     // }
 }
