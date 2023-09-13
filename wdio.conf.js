@@ -1,7 +1,7 @@
 import {generate} from "multiple-cucumber-html-reporter";
-// import {removeSync} from "fs-extra/lib/remove/index.js";
-// const {removeSync} = require('fs-extra');
 
+import pkg from 'fs-extra';
+const {removeSync} = pkg;
 
 export const config = {
     //
@@ -176,7 +176,7 @@ export const config = {
      * @param {Array.<Object>} capabilities list of capabilities details
      */
     onPrepare: function (config, capabilities) {
-        // removeSync('./reports/')
+        removeSync('./reports/');
     },
     /**
      * Gets executed before a worker process is spawned and can be used to initialise specific service
