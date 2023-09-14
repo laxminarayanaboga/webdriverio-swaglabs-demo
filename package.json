@@ -14,7 +14,6 @@
     "chai": "^4.3.8",
     "fs-extra": "^11.1.1",
     "multiple-cucumber-html-reporter": "^3.4.0",
-    "mysql": "^2.18.1",
     "mysql2": "^3.6.1",
     "wdio-cucumberjs-json-reporter": "^5.1.7"
   },
