@@ -1,5 +1,6 @@
 import { $ } from '@wdio/globals'
 import Page from './page.js';
+import cucumberJson from "wdio-cucumberjs-json-reporter";
 
 /**
  * sub page containing specific selectors and methods for a specific page
@@ -27,6 +28,7 @@ class LoginPage extends Page {
     async login (username, password) {
         await this.inputUsername.setValue(username);
         await this.inputPassword.setValue(password);
+        cucumberJson.attach(await browser.takeScreenshot(), 'image/png');
         await this.btnSubmit.click();
     }
 
